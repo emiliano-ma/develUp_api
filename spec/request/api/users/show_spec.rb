@@ -3,7 +3,6 @@ RSpec.describe "GET /api/users", type: :request do
   let(:credentials) { develuper.create_new_auth_token }
   let(:headers) { { HTTP_ACCEPT: "application/json" }.merge!(credentials) }
 
-
   describe "API provides single develuper profile" do
     before do
       get "/api/users/#{develuper.id}",
@@ -18,13 +17,12 @@ RSpec.describe "GET /api/users", type: :request do
       expect(response_json["user"]["name"]).to eq "MyName"
     end
 
-
     it "returns a specific user level" do
       expect(response_json["user"]["level"]).to eq 0
     end
 
     it "returns a specific user skills" do
-      expect(response_json["user"]["skills"]).to eq ["Javascript", "Ruby"]
+      expect(response_json["user"]["skills"]).to eq %w[Javascript Ruby]
     end
 
     it "returns a specific user completed projects" do
@@ -41,12 +39,12 @@ RSpec.describe "GET /api/users", type: :request do
       get "/api/users/wrongId",
           headers: headers
     end
-    
+
     it "responds with not found status" do
       expect(response).to have_http_status :not_found
     end
 
-    it "is expected to return with error message" do
+    it "returns error message" do
       expect(response_json["error_message"]).to eq "Sorry, user does not exist"
     end
   end
@@ -56,11 +54,11 @@ RSpec.describe "GET /api/users", type: :request do
       get "/api/users/#{develuper.id}"
     end
 
-    it "is expected to return unauthozired response status" do
+    it "returns unauthozired response status" do
       expect(response).to have_http_status :unauthorized
     end
 
-    it "is expected to return error message" do
+    it "returns error message" do
       expect(response_json["errors"][0]).to eq "You need to sign in or sign up before continuing."
     end
   end
