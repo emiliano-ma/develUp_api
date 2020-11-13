@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :assignment do
     title { "MyString" }
     skills { %w[Javascript Ruby] }
-    points { 320 }
+    points { 600 }
     budget { 500 }
     description { "MyText" }
     association :client, factory: :client

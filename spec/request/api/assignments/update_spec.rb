@@ -112,3 +112,45 @@ RSpec.describe 'PUT /api/assignments', type: :request do
     end
   end
 end
+
+RSpec.describe 'PUT /api/assignments', type: :request do
+  let!(:client) { create(:client) }
+  let!(:develuper) { create(:develuper) }
+  let!(:credentials) { client.create_new_auth_token }
+  let!(:headers) { { HTTP_ACCEPT: 'application/json' }.merge!(credentials) }
+  let!(:assignment) { create(:assignment, client_id: client.id) }
+
+  describe 'Client can successfully close assignment' do
+    before do
+      put "/api/assignments/#{assignment.id}",
+          params: {
+            assignment: {
+              status: 'done'
+            }
+          }, headers: headers
+    end
+
+    it 'responds with ok status' do
+      expect(response).to have_http_status :ok
+    end
+    it 'returns updated assignments status' do
+      assignment = Assignment.last
+      expect(assignment.status).to eq 'done'
+    end
+    it 'returns updated develuper completed_projects' do
+      develuper = User.last
+      expect(develuper.completed_projects).to eq 1
+    end
+    it 'returns updated develuper points' do
+      develuper = User.last
+      expect(develuper.points).to eq 640
+    end
+    it 'returns updated develuper level' do
+      develuper = User.last
+      expect(develuper.level).to eq 2
+    end
+    it 'returns success message' do
+      expect(response_json['message']).to eq 'successfully selected'
+    end
+  end
+
