@@ -69,7 +69,6 @@ class Api::AssignmentsController < ApplicationController
 
   def client_update(assignment)
     if selecting_develuper
-      binding.pry
       assignment.selected ? (render json: { message: "You already selected a develUper to this assignment" }, status: :unprocessable_entity) :
         (assignment.update!(update_params)
         render json: { message: "successfully selected" }, status: :ok)
@@ -77,13 +76,9 @@ class Api::AssignmentsController < ApplicationController
       assignment.update!(update_params)
       user = User.where(id: assignment.selected)
       newpoints = user[0]["points"] + assignment.points
-
-      user[0].update_attribute(:points, newpoints)
-      
-      # user.points = user.points + assginment.points
-
-
-
+      new_completed_projects = user[0]["completed_projects"] + 1
+      new_level = newpoints / 1000
+      user.update({ points: newpoints, completed_projects: new_completed_projects, level: new_level })
       render json: { message: "successfully selected" }, status: :ok
     end
   end
