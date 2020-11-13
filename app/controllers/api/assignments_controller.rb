@@ -55,6 +55,10 @@ class Api::AssignmentsController < ApplicationController
     render json: { message: "Sorry, you don't have the necessary permission" }, status: :unauthorized
   end
 
+  def selecting_develuper
+    !params["selected"].nil?
+  end
+
   def develuper_update(assignment)
     assignment.applicants.include?(current_user.id) ?
       (render json: { message: "You already applied to this assignment" }, status: :unprocessable_entity) :
@@ -64,9 +68,24 @@ class Api::AssignmentsController < ApplicationController
   end
 
   def client_update(assignment)
-    assignment.selected ? (render json: { message: "You already selected a develUper to this assignment" }, status: :unprocessable_entity) :
-      (assignment.update!(update_params)
-      render json: { message: "successfully selected" }, status: :ok)
+    if selecting_develuper
+      binding.pry
+      assignment.selected ? (render json: { message: "You already selected a develUper to this assignment" }, status: :unprocessable_entity) :
+        (assignment.update!(update_params)
+        render json: { message: "successfully selected" }, status: :ok)
+    else
+      assignment.update!(update_params)
+      user = User.where(id: assignment.selected)
+      newpoints = user[0]["points"] + assignment.points
+
+      user[0].update_attribute(:points, newpoints)
+      
+      # user.points = user.points + assginment.points
+
+
+
+      render json: { message: "successfully selected" }, status: :ok
+    end
   end
 
   def update_params
