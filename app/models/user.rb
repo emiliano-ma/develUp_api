@@ -19,10 +19,11 @@ class User < ActiveRecord::Base
 
   validates_presence_of :company_name, :company_url, if: :client?
   validates_presence_of :name, :skills, :level, :points, :completed_projects, if: :develuper?
-
+  validates_presence_of :name, :skills, :level, :points, :completed_projects, if: :registered?
+  
   validates_presence_of :role
 
-  enum role: [:client, :develuper]
+  enum role: [:registered, :client, :develuper]
   has_many :assignments, foreign_key: "client_id", class_name: "Assignment"
 
   private
@@ -33,5 +34,8 @@ class User < ActiveRecord::Base
 
   def client?
     role == "client"
+  end
+  def registered?
+    role == "registered"
   end
 end
