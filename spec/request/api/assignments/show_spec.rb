@@ -24,7 +24,7 @@ RSpec.describe "GET /api/assignments", type: :request do
       expect(response_json["assignment"]["budget"]).to eq 500
     end
     it "returns a specific assignment points" do
-      expect(response_json["assignment"]["points"]).to eq 320
+      expect(response_json["assignment"]["points"]).to eq 600
     end
     it "returns applicants for specific assignment" do
       expect(response_json["assignment"]["applicants"]).to eq [1, 2]

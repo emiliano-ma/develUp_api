@@ -12,7 +12,7 @@ FactoryBot.define do
       role { "develuper" }
       name { "MyName" }
       skills { ["Javascript", "Ruby"] }
-      points { 320 }
+      points { 5520 }
     end
   end
 end
