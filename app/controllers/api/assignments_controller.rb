@@ -72,7 +72,7 @@ class Api::AssignmentsController < ApplicationController
       assignment.selected ? (render json: { message: "You already selected a develUper to this assignment" }, status: :unprocessable_entity) :
         (assignment.update!(update_params)
         render json: { message: "successfully selected" }, status: :ok)
-    else
+    elsif 
       assignment.update!(update_params)
       user = User.where(id: assignment.selected)
       newpoints = user[0]["points"] + assignment.points

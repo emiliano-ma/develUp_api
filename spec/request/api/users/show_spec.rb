@@ -31,7 +31,7 @@ RSpec.describe "GET /api/users", type: :request do
     end
 
     it "returns a specific user poins" do
-      expect(response_json["user"]["points"]).to eq 320
+      expect(response_json["user"]["points"]).to eq 5520
     end
   end
 

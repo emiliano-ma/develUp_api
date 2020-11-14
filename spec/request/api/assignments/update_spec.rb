@@ -143,7 +143,7 @@ RSpec.describe "PUT /api/assignments", type: :request do
     end
     it "returns updated develuper points" do
       develuper = User.last
-      expect(develuper.points).to eq 5520
+      expect(develuper.points).to eq 6120
     end
     it "returns updated develuper level" do
       develuper = User.last
