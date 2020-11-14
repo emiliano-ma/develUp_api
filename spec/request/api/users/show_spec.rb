@@ -14,7 +14,6 @@ RSpec.describe "GET /api/users", type: :request do
     end
 
     it "returns a specific user name" do
-      develuper = User.find(develuper.id)
       expect(response_json["user"]["name"]).to eq "MyName"
     end
 
