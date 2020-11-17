@@ -4,8 +4,6 @@ This project extended for a two weeks time period and concluded our time as Stud
 
 The client can be found in [this Repo](https://github.com/emiliano-ma/develUp_mobile)
 
-![develUp image](./public/develup.png)
-
 ## develUp
 
 develUp was born with the simple idea of providing a platform that connects freelance developers with companies in a trustworthy and score based environment
